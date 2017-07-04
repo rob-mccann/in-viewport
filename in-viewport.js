@@ -31,9 +31,15 @@ function inViewport(elt, params, cb) {
     }
   }
 
-  return instances[
+  var instance = instances[
     instances.push(createInViewport(container, debounceValue, failsafe)) - 1
-  ].isInViewport(elt, offset, cb);
+  ];
+
+  // check if the element is in the viewport immediately rather
+  // than waiting for next tick
+  watchInViewport(elt, offset, cb);
+
+  return instance.isInViewport(elt, offset, cb);
 }
 
 function addEvent(el, type, fn) {
